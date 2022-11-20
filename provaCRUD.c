@@ -2,14 +2,6 @@
 #include <string.h>
 #include <locale.h>
 
-// Aluno
-struct aluno {
-  int id_aluno;
-  char nm_aluno[50];
-  int deleted;
-
-};
-
 // Notas
 struct notas {
   int id_aluno;
@@ -17,8 +9,15 @@ struct notas {
   float vl_nota;
 };
 
-typedef struct aluno aluno;
+// Aluno
+struct aluno {
+  int id_aluno;
+  char nm_aluno[50];
+  int deleted;
+};
+
 typedef struct notas notas;
+typedef struct aluno aluno;
 
 // Cadastrar
 aluno cadastrarAluno() {
@@ -152,9 +151,36 @@ void relatorioAlunos(int tamanho, aluno als[100]) {
   }
 }
 
+notas cadastrarNotasAluno(int tamanho, aluno als[100]) {
+  int i, cod;
+
+  printf("Código do aluno: ");
+  scanf("%d", &cod);
+
+  for (int i = 0;i < tamanho; i++) {
+    if (als[i].id_aluno == cod) {
+      printf("Nome do aluno: %s", als[i].nm_aluno);
+      break;
+    }
+  }
+
+  notas nota;
+  printf("Digite o valor da nota: ");
+  scanf("%f", nota.vl_nota);
+  if (nota.vl_nota < 0.0) {
+    printf("Nota inválida! Digite outra: ")
+    scanf("%f", nota.vl_nota);
+  }
+  nota.id_aluno = cod;
+  nota.id_nota = cod;
+
+  return nota
+}
+
 int main() {
   int option, i, listaIds[100]; // Lista que guarda o id dos alunos
   aluno listaAlunos[100]; // Lista de alunos
+  notas listaNotas[300]; // Lista de notas
   int tamanhoListaAlunos = sizeof(listaAlunos)/sizeof(listaAlunos[0]); // Tamanho da lista de alunos
 
   // Menu principal
@@ -220,17 +246,29 @@ int main() {
           case 2:
             do {
               printf("\tO que deseja?\n");
-              printf("\t[1] - Cadastrar\n");
-              printf("\t[2] - Consultar por id\n");
-              printf("\t[3] - Excluir por id\n");
-              printf("\t[4] - Alterar por id\n");
-              printf("\t[5] - Relatório\n");
-              printf("\t[6] - Voltar\n");
+              printf("\t[1] - Incluir Nota do Aluno\n");
+              printf("\t[2] - Alterar Nota do Aluno\n");
+              printf("\t[3] - Excluir Nota do Aluno\n");
+              printf("\t[4] - Consultar Notas do Aluno\n");
+              printf("\t[5] - Voltar\n");
               printf("\tOpção: ");
               scanf("%d", &option);
               if (option > 6 || option < 1) {
                 printf("\tOpção inválida! Digite outra: ");
                 scanf("\t%d", &option);
+              } else {
+                switch(option) {
+                  case 1:
+                    break;
+                  case 2:
+                    break;
+                  case 3:
+                    break;
+                  case 4:
+                    break;
+                  case 5:
+                    break;
+                }
               }
             } while (option != 6);
             break;
