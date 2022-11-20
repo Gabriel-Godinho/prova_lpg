@@ -50,8 +50,30 @@ void consultarAluno(int tamanho, aluno als[100]) {
   
   for (i = 0; i < tamanho; i++) {
     if (als[i].id_aluno == cod) {
-      printf("Nome: %s", als[i].nm_aluno);
+      printf("\tNome: %s\n\n", als[i].nm_aluno);
       break;
+    }
+  }
+}
+
+void deletarAluno(int tamanho, aluno als[100]) {
+  int i, cod;
+  char option;
+
+  printf("\n\tCódigo do aluno: ");
+  scanf("%d", &cod);
+
+  for (i = 0; i < tamanho; i++) {
+    if (als[i].id_aluno == cod) {
+      printf("\tDeseja excluir o seguinte aluno? %s\n", als[i].nm_aluno);
+      printf("\t[S]im ou [N]ão: ");
+      scanf("%c", &option);
+      if (option == 'S' || option == 's') {
+        als[i].deleted = 1;
+        printf("\tAluno deletado com sucesso!\n\n");
+        break;
+      } else if (option == 'N' || option == 'n')
+        break;
     }
   }
 }
@@ -106,6 +128,9 @@ int main() {
                     break;
                   case 2:
                     consultarAluno(tamanhoListaAlunos, listaAlunos);
+                    break;
+                  case 3:
+                    deletarAluno(tamanhoListaAlunos, listaAlunos);
                     break;
                 }
               }
