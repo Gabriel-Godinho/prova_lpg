@@ -43,7 +43,7 @@ aluno cadastrarAluno() {
 }
 
 // Consultar
-void consultarAluno(int tamanho, aluno als[100]) {
+void consultarAluno(int tamanho, aluno als[10]) {
   int i, cod;
 
   printf("\n\tCódigo do aluno: ");
@@ -61,7 +61,7 @@ void consultarAluno(int tamanho, aluno als[100]) {
 }
 
 // Deletar
-aluno* deletarAluno(int tamanho, aluno als[100]) {
+aluno* deletarAluno(int tamanho, aluno als[10]) {
   int i, cod;
   char option;
 
@@ -88,7 +88,7 @@ aluno* deletarAluno(int tamanho, aluno als[100]) {
 }
 
 // Alterar
-aluno* alterarAluno(int tamanho, aluno als[100]) {
+aluno* alterarAluno(int tamanho, aluno als[10]) {
   int i, cod;
   char option;
   char novoNome[50];
@@ -124,7 +124,7 @@ aluno* alterarAluno(int tamanho, aluno als[100]) {
 }
 
 // Relatório alunos
-void relatorioAlunos(int tamanho, aluno als[100]) {
+void relatorioAlunos(int tamanho, aluno als[10]) {
   int i;
   
   printf("\t-------------------------------------------------------------------------\n");
@@ -151,7 +151,7 @@ void relatorioAlunos(int tamanho, aluno als[100]) {
   }
 }
 
-notas cadastrarNotasAluno(int tamanho, aluno als[100]) {
+notas cadastrarNotasAluno(int tamanho, aluno als[10]) {
   int i, cod;
 
   printf("Código do aluno: ");
@@ -178,9 +178,9 @@ notas cadastrarNotasAluno(int tamanho, aluno als[100]) {
 }
 
 int main() {
-  int option, i, listaIds[100]; // Lista que guarda o id dos alunos
-  aluno listaAlunos[100]; // Lista de alunos
-  notas listaNotas[300]; // Lista de notas
+  int option, i, listaIds[10]; // Lista que guarda o id dos alunos
+  aluno listaAlunos[10]; // Lista de alunos
+  notas listaNotas[10][3]; // Lista de notas
   int tamanhoListaAlunos = sizeof(listaAlunos)/sizeof(listaAlunos[0]); // Tamanho da lista de alunos
 
   // Menu principal
