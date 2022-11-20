@@ -52,6 +52,9 @@ void consultarAluno(int tamanho, aluno als[100]) {
   
   for (i = 0; i < tamanho; i++) {
     if (als[i].id_aluno == cod) {
+      if (als[i].deleted == 1)
+        continue;
+      
       printf("\tNome: %s\n\n", als[i].nm_aluno);
       break;
     }
@@ -59,7 +62,7 @@ void consultarAluno(int tamanho, aluno als[100]) {
 }
 
 // Deletar
-void deletarAluno(int tamanho, aluno als[100]) {
+aluno* deletarAluno(int tamanho, aluno als[100]) {
   int i, cod;
   char option;
 
@@ -70,17 +73,19 @@ void deletarAluno(int tamanho, aluno als[100]) {
     if (als[i].id_aluno == cod) {
       printf("\tDeseja excluir o seguinte aluno? %s\n", als[i].nm_aluno);
       printf("\t[S]im ou [N]ão: ");
-      scanf("%c", &option);
+      scanf("\t%c", &option);
       if (option == 'S' || option == 's') {
         als[i].deleted = 1;
         printf("\tAluno deletado com sucesso!\n\n");
-        break;
+        return als;
       } else if (option == 'N' || option == 'n') {
-        printf("Aluno não deletado!");
-        break;
+        printf("\tAluno não deletado!");
+        return als;
       }
     }
   }
+  
+  return als;
 }
 
 // Alterar
@@ -94,6 +99,10 @@ aluno* alterarAluno(int tamanho, aluno als[100]) {
 
   for (i = 0; i < tamanho; i++) {
     if (als[i].id_aluno == cod) {
+
+      if (als[i].deleted == 1)
+        continue;
+      
       printf("\tNome do aluno: %s\n", als[i].nm_aluno);
       printf("\tNovo nome: ");
       scanf("\t%s", novoNome);
@@ -108,7 +117,6 @@ aluno* alterarAluno(int tamanho, aluno als[100]) {
       } else if (option == 'N' || option == 'n') {
         printf("Alteração cancelada!");
         return als;
-        break;
       }
     }
   }
@@ -129,12 +137,19 @@ void relatorioAlunos(int tamanho, aluno als[100]) {
 
   for (i = 0; i < tamanho; i++) {
     // Quando os alunos acabarem o loop acabada
+  
+    if (als[i].deleted == 1)
+      continue;
+    
     if (als[i].id_aluno <= 0)
       break;
-    }
+
+    if (tamanho == 0)
+      break;
     
     printf("\t|  %d  | %s                                              |   %d         |\n", als[i].id_aluno, als[i].nm_aluno, als[i].deleted);
     printf("\t|------|-------------------------------------------------|--------------|\n");
+  }
 }
 
 int main() {
@@ -189,7 +204,7 @@ int main() {
                     consultarAluno(tamanhoListaAlunos, listaAlunos);
                     break;
                   case 3:
-                    deletarAluno(tamanhoListaAlunos, listaAlunos);
+                    strcpy(listaAlunos, deletarAluno(tamanhoListaAlunos, listaAlunos));
                     break;
                   case 4:
                     strcpy(listaAlunos, alterarAluno(tamanhoListaAlunos, listaAlunos));
