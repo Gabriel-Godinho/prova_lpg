@@ -151,36 +151,52 @@ void relatorioAlunos(int tamanho, aluno als[10]) {
   }
 }
 
+// Cadastrar notas
 notas cadastrarNotasAluno(int tamanho, aluno als[10]) {
   int i, cod;
 
-  printf("Código do aluno: ");
-  scanf("%d", &cod);
+  printf("\tCódigo do aluno: ");
+  scanf("\t%d", &cod);
 
   for (int i = 0;i < tamanho; i++) {
     if (als[i].id_aluno == cod) {
-      printf("Nome do aluno: %s", als[i].nm_aluno);
+      printf("\tNome do aluno: %s\n", als[i].nm_aluno);
       break;
     }
   }
 
   notas nota;
-  printf("Digite o valor da nota: ");
-  scanf("%f", nota.vl_nota);
+  printf("\tDigite o valor da nota: ");
+  scanf("\t%f", &nota.vl_nota);
   if (nota.vl_nota < 0.0) {
-    printf("Nota inválida! Digite outra: ")
-    scanf("%f", nota.vl_nota);
+    printf("\tNota inválida! Digite outra: ");
+    scanf("\t%f", &nota.vl_nota);
   }
   nota.id_aluno = cod;
   nota.id_nota = cod;
 
-  return nota
+  return nota;
+}
+
+void consultarNotas(notas listaNotas[10], int tamanho, aluno als[10]) {
+  int i, j, cod;
+
+  printf("\tCódigo do aluno: ");
+  scanf("\t%d", &cod);
+
+  for (int i = 0;i < tamanho; i++) {
+    if (als[i].id_aluno == cod) {
+      printf("\tNome do aluno: %s\n", als[i].nm_aluno);
+      printf("\tNota: %f\n", listaNotas[i].vl_nota);
+      break;
+    }
+  }
 }
 
 int main() {
-  int option, i, listaIds[10]; // Lista que guarda o id dos alunos
+  int option, i, j, listaIds[10]; // Lista que guarda o id dos alunos
   aluno listaAlunos[10]; // Lista de alunos
-  notas listaNotas[10][3]; // Lista de notas
+  notas listaNotas[10]; // Lista de notas
   int tamanhoListaAlunos = sizeof(listaAlunos)/sizeof(listaAlunos[0]); // Tamanho da lista de alunos
 
   // Menu principal
@@ -259,18 +275,26 @@ int main() {
               } else {
                 switch(option) {
                   case 1:
+                    for (i = 0; i < tamanhoListaAlunos; i++) {
+                      if (listaNotas[i].id_aluno <= 0) {
+                        listaNotas[i] = cadastrarNotasAluno(tamanhoListaAlunos, listaAlunos);
+                        printf("\tNota cadastrada com sucesso!\n\n");
+                        break;
+                      }
+                    }  
                     break;
                   case 2:
                     break;
                   case 3:
                     break;
                   case 4:
+                    consultarNotas(listaNotas, tamanhoListaAlunos, listaAlunos);
                     break;
                   case 5:
                     break;
                 }
               }
-            } while (option != 6);
+            } while (option != 5);
             break;
           // Menu do relatório
           case 3:
