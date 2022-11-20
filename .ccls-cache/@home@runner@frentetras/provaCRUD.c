@@ -20,6 +20,7 @@ struct notas {
 typedef struct aluno aluno;
 typedef struct notas notas;
 
+// Cadastrar
 aluno cadastrarAluno() {
   int id;
   char nome[50];
@@ -42,6 +43,7 @@ aluno cadastrarAluno() {
   return al;
 }
 
+// Consultar
 void consultarAluno(int tamanho, aluno als[100]) {
   int i, cod;
 
@@ -56,6 +58,7 @@ void consultarAluno(int tamanho, aluno als[100]) {
   }
 }
 
+// Deletar
 void deletarAluno(int tamanho, aluno als[100]) {
   int i, cod;
   char option;
@@ -72,16 +75,72 @@ void deletarAluno(int tamanho, aluno als[100]) {
         als[i].deleted = 1;
         printf("\tAluno deletado com sucesso!\n\n");
         break;
-      } else if (option == 'N' || option == 'n')
+      } else if (option == 'N' || option == 'n') {
+        printf("Aluno não deletado!");
         break;
+      }
     }
   }
 }
 
+// Alterar
+aluno* alterarAluno(int tamanho, aluno als[100]) {
+  int i, cod;
+  char option;
+  char novoNome[50];
+
+  printf("\n\tCódigo do aluno: ");
+  scanf("%d", &cod);
+
+  for (i = 0; i < tamanho; i++) {
+    if (als[i].id_aluno == cod) {
+      printf("\tNome do aluno: %s\n", als[i].nm_aluno);
+      printf("\tNovo nome: ");
+      scanf("\t%s", novoNome);
+      printf("Confirma a alteração?");
+      printf("\t[S]im ou [N]ão: ");
+      scanf("%c", &option);
+      if (option == 'S' || option == 's') {
+        strcpy(als[i].nm_aluno, novoNome);
+        als[i].id_aluno = cod;
+        printf("\tAluno alterado com sucesso!\n\n");
+        return als;
+      } else if (option == 'N' || option == 'n') {
+        printf("Alteração cancelada!");
+        return als;
+        break;
+      }
+    }
+  }
+
+  return als;
+}
+
+// Relatório alunos
+void relatorioAlunos(int tamanho, aluno als[100]) {
+  int i;
+  
+  printf("\t-------------------------------------------------------------------------\n");
+  printf("\tRelatório\n");
+  printf("\t-------------------------------------------------------------------------\n");
+  printf("\t-------------------------------------------------------------------------\n");
+  printf("\t|  ID  | Nome                                            |   Excluído   |\n");
+  printf("\t|------|-------------------------------------------------|--------------|\n");
+
+  for (i = 0; i < tamanho; i++) {
+    // Quando os alunos acabarem o loop acabada
+    if (als[i].id_aluno <= 0)
+      break;
+    }
+    
+    printf("\t|  %d  | %s                                              |   %d         |\n", als[i].id_aluno, als[i].nm_aluno, als[i].deleted);
+    printf("\t|------|-------------------------------------------------|--------------|\n");
+}
+
 int main() {
-  int option, i, listaIds[100];
-  aluno listaAlunos[100];
-  int tamanhoListaAlunos = sizeof(listaAlunos)/sizeof(listaAlunos[0]);
+  int option, i, listaIds[100]; // Lista que guarda o id dos alunos
+  aluno listaAlunos[100]; // Lista de alunos
+  int tamanhoListaAlunos = sizeof(listaAlunos)/sizeof(listaAlunos[0]); // Tamanho da lista de alunos
 
   // Menu principal
   do {
@@ -131,6 +190,12 @@ int main() {
                     break;
                   case 3:
                     deletarAluno(tamanhoListaAlunos, listaAlunos);
+                    break;
+                  case 4:
+                    listaAlunos = alterarAluno(tamanhoListaAlunos, listaAlunos);
+                    break;
+                  case 5:
+                    relatorioAlunos(tamanhoListaAlunos, listaAlunos);
                     break;
                 }
               }
