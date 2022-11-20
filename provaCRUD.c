@@ -42,6 +42,18 @@ aluno cadastrarAluno() {
   return al;
 }
 
+void consultarAluno(int tamanho, aluno als[100]) {
+  int i, cod;
+
+  printf("\n\tCódigo do aluno: ");
+  scanf("%d", &cod);
+  
+  for (i = 0; i < tamanho; i++) {
+    if (als[i].id_aluno == cod)
+      printf("Nome: %s", als[i].nm_aluno);
+  }
+}
+
 int main() {
   int option, i, listaIds[100];
   aluno listaAlunos[100];
@@ -89,6 +101,9 @@ int main() {
                         break;
                       }
                     }
+                    break;
+                  case 2:
+                    consultarAluno(tamanhoListaAlunos, listaAlunos);
                     break;
                 }
               }
