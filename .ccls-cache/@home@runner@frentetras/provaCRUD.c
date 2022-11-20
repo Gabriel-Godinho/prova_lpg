@@ -49,8 +49,10 @@ void consultarAluno(int tamanho, aluno als[100]) {
   scanf("%d", &cod);
   
   for (i = 0; i < tamanho; i++) {
-    if (als[i].id_aluno == cod)
+    if (als[i].id_aluno == cod) {
       printf("Nome: %s", als[i].nm_aluno);
+      break;
+    }
   }
 }
 
