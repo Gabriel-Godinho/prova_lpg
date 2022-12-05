@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct aluno {
   int id;
@@ -8,27 +9,34 @@ struct aluno {
 
 typedef struct aluno aln;
 
-int main() {
+int main(int argc, char *argv[]) {
 
-  aln a[25];
-  int id;
-  char nome[50];
+  FILE *arq;
+  char Linha[100];
+  char *result, *teste;
+  int i;
 
-  FILE *arquivo = fopen("nomes.txt", "r");
-
-  if (arquivo == NULL)
-    printf("Falha ao abrir o arquivo!");
-
-  while(fscanf(arquivo, "%d;%[^;]", &id, nome) == 2) {
-
-    
-
-
-    
+  arq = fopen("nomes.txt", "rt");
+  if (arq == NULL) 
+  {
+     printf("Problemas na abertura do arquivo\n");
+     return 0;
   }
-
   
+  i = 1;
+  while (!feof(arq))
+  {
+    result = fgets(Linha, 100, arq);
 
+    teste = strtok(Linha, ";");
+	  printf("%s\n", teste);
 
+    teste = strtok(NULL, ";");
+    printf("%s\n", teste);
+    
+    i++;
+  }
+  
+  fclose(arq);
   
 }
