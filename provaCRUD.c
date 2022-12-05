@@ -135,16 +135,9 @@ void relatorioAlunos(int tamanho, aluno als[10]) {
   printf("\t|------|-------------------------------------------------|--------------|\n");
 
   for (i = 0; i < tamanho; i++) {
-    // Quando os alunos acabarem o loop acabada
-  
-    if (als[i].deleted == 1)
-      continue;
     
     if (als[i].id_aluno <= 0)
-      break;
-
-    if (tamanho == 0)
-      break;
+      break; // Quando os alunos acabarem o loop acabada
     
     printf("\t|  %d  | %s                                              |   %d         |\n", als[i].id_aluno, als[i].nm_aluno, als[i].deleted);
     printf("\t|------|-------------------------------------------------|--------------|\n");
