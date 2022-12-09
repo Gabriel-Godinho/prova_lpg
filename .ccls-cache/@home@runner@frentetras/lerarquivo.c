@@ -1,54 +1,110 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <locale.h>
+#include <stdbool.h>
 
-struct aluno {
-  int id;
+#define MAXCHAR 1000
+
+typedef struct a {
+
   char nome[60];
-};
+  int id;
 
-typedef struct aluno aln;
+} aluno;
 
-void relatorio(){};
+// Consultar por id
+void consultarAluno(int tamanho, aluno als[10]) {
+  int i, cod;
+  printf("\n\tCódigo do aluno: ");
+  scanf("%d", &cod);
+  
+  for (i = 0; i < tamanho; i++) {
+    if (als[i].id == cod) {
+      printf("\tNome: %s\n\n", als[i].nome);
+      break;
+    }
+  }
+}
 
-void consulta(){};
-
-int main(int argc, char *argv[]) {
-
-  FILE *arq;
-  aln listaAlunos[25];
-  char Linha[100];
-  char *result, *teste;
+// RelatÃ³rio alunos
+void relatorioAlunos(int tamanho, aluno als[10]) {
   int i;
-
-  arq = fopen("nomes.txt", "rt");
-  if (arq == NULL) 
-  {
-     printf("Problemas na abertura do arquivo\n");
-     return 0;
-  }
   
-  i = 1;
-  while (!feof(arq))
-  {
-
-    aln al;
+  printf("\t|--------------------------------------------------------|\n");
+  printf("\t                         Relatório\n");
+  printf("\t---------------------------------------------------------|\n");
+  printf("\t|--------------------------------------------------------|\n");
+  printf("\t|  ID  | Nome                                            |\n");
+  printf("\t|------|-------------------------------------------------|\n");
+  for (i = 0; i < tamanho; i++) {
     
-    result = fgets(Linha, 100, arq);
-
-    teste = strtok(Linha, ";");
-	  printf("%s\n", teste);
-    al.id = (long int)teste;
-
-    teste = strtok(NULL, ";");
-    printf("%s\n", teste);
-    strcpy(al.nome, teste);
-
-    listaAlunos[i] = al;
+    if (als[i].id <= 0)
+      break; // Quando os alunos acabarem o loop acabada
     
-    i++;
+    printf("\t|  %d  | %s                                              |\n", als[i].id, als[i].nome);
+    printf("\t|------|-------------------------------------------------|\n");
   }
+
+  printf("\t|--------------------------------------------------------|\n");
+}
+
+int main() {
   
-  fclose(arq);
-  
+  int option ;
+  FILE * fp;
+  char row[MAXCHAR];
+  char * token;
+  aluno listaAlunos[510];
+  int i = 0;
+
+  int tamanhoListaAlunos = sizeof(listaAlunos)/sizeof(listaAlunos[0]); // Tamanho da lista de alunos
+
+  fp = fopen("nomes.txt","r");
+
+
+    while (feof(fp) != true)
+    {
+
+        aluno a;
+        fgets(row, MAXCHAR, fp);
+
+        token = strtok(row, ";");
+        a.id = atoi(token);
+
+        while(token != NULL)
+        {
+            strcpy(a.nome, token);
+            token = strtok(NULL, ";");
+        }
+
+        listaAlunos[i] = a;
+        i++;
+    }
+
+  do {
+    printf("Escolha uma opcao\n");
+    printf("\tO que deseja?\n");
+    printf("\t[1] - Consultar por id\n");
+    printf("\t[2] - Relatorio\n");
+    printf("\t[3] - Sair\n");
+    printf("Opcao: ");
+    scanf("%d", &option);
+    
+    if (option > 3 || option < 1) {
+      printf("Opcao invalida! Digite outra: ");
+      scanf("%d", &option);
+    } else {
+       
+        switch (option) {
+          case 1:  
+              consultarAluno(tamanhoListaAlunos, listaAlunos);
+            break;
+        
+          case 2:
+              relatorioAlunos(tamanhoListaAlunos, listaAlunos);
+            break;
+        }
+      }
+  } while (option != 3);
 }
